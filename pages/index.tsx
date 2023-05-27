@@ -1,13 +1,17 @@
 import { pokeApi } from '@/api';
 import { Layout } from '@/components/layouts';
-import { NextPage,GetStaticProps } from 'next';
+import { GetStaticProps } from 'next';
 import { PokemonListResponse, SmallPokemon } from '@/interfaces';
-import { Card, Grid, Row, Text } from '@nextui-org/react';
+import { Grid } from '@nextui-org/react';
 import { FC } from 'react';
+import { PokemonCards } from '@/components/pokemon';
 
 interface Props {
     pokemons: SmallPokemon[];
+    
 }
+
+
 
 const HomePage: FC<Props>= ({pokemons}) => {
     return (
@@ -15,28 +19,8 @@ const HomePage: FC<Props>= ({pokemons}) => {
             <Layout title='listado de pokemon'>
                 <Grid.Container gap={2} justify='flex-start'>
                     {
-                        pokemons.map(({id,name,img})=>(
-                            <Grid xs={6} sm={3} md={2} xl={1}
-                                key={id}>
-                                <Card isHoverable isPressable>
-                                    <Card.Body css={{p:1}}>
-                                        <Card.Image
-                                            src={img}
-                                            width="100%"
-                                            height={140}
-                                        >
-                                        </Card.Image>
-                                    </Card.Body>
-                                    <Card.Footer>
-                                        <Row justify='space-between'>
-                                            <Text transform='capitalize'>{name}</Text>
-                                            <Text>#{id}</Text>
-
-                                        </Row>
-                                    </Card.Footer>
-
-                                </Card>
-                            </Grid>
+                        pokemons.map((pokemon)=>(
+                            <PokemonCards key={pokemon.id} pokemon={pokemon} />
                         ))
                     }
                 </Grid.Container>
